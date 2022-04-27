@@ -4,8 +4,12 @@
 using namespace std;
 int userInput;
 
-void Merge();
+// define each function are used
 void menuDisplay();
+void Merge();
+void countWords();
+void countChars();
+void countLines();
 void searchWord();
 
 int main()
@@ -17,6 +21,15 @@ int main()
     case 6:
         Merge();
         break;
+    case 7:
+        countWords();
+        break;
+    case 8:
+        countChars();
+        break;
+    case 9:
+        countLines();
+        break;
     case 10:
         searchWord();
         break;
@@ -27,7 +40,7 @@ int main()
 }
 //_________________________________________
 void menuDisplay() {
-    while (true) {
+    while (true) { // Dispaly menu and take user input
         cout << "1- Add new text to the end of the file\n";
         cout << "2- Display the content of the file\n";
         cout << "3- Empty the file\n";
@@ -45,8 +58,9 @@ void menuDisplay() {
         cout << "15- Save\n";
         cout << "16- Exit\n--> ";
         cin >> userInput;
-        if (userInput >= 1 && userInput <= 16)
+        if (userInput >= 1 && userInput <= 16) {
             break;
+        }
         else {
             cout << "Please enter valid input from the menu!!\n\n";
             cin.ignore();
@@ -78,6 +92,91 @@ void Merge() {
     firstFile.close();
     secFile.close();
 
+}
+//_________________________________________
+void countWords() {
+    fstream file;
+    char name[100];
+    int count = 0;
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                file >> name;
+                if (name != NULL) { // Count words
+                    count++;
+                }
+            }
+            cout << "There is " << count << " words in this file.";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void countChars() {
+    fstream file;
+    char name[100];
+    int count = 0;
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {   
+                /*if (isalnum(file.get())) { // will count if alpha or digit not else 
+                    count++;
+                }*/
+                if (isascii(file.get())) { // If the char is in ascii will count even spaces
+                    count++;
+                }
+            }
+            cout << "There is " << count << " characters in this file.";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void countLines() {
+    fstream file;
+    char name[256];
+    int count = 0;
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                if (file.getline(name, 256, '\n')) { // Count lines
+                    count++;
+                }
+            }
+            cout << "There is " << count << " lines in this file.";
+            break;
+        }
+    }
+    file.close();
 }
 //_________________________________________
 void searchWord() {
