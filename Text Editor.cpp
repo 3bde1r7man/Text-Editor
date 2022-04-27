@@ -6,6 +6,7 @@ int userInput;
 
 void Merge();
 void menuDisplay();
+void searchWord();
 
 int main()
 {
@@ -15,6 +16,9 @@ int main()
     {
     case 6:
         Merge();
+        break;
+    case 10:
+        searchWord();
         break;
     default:
         break;
@@ -53,20 +57,68 @@ void menuDisplay() {
 void Merge() {
     fstream firstFile, secFile;
     char name1[100], name2[100];
-    cout << "Please enter the first file name to append to(e.g. file1.txt): ";
-    cin >> name1;
-    cout << "Please enter the second file name(e.g. file2.txt): ";
-    cin >> name2;
-    firstFile.open(name1, ios::app);
-    secFile.open(name2, ios::in);
-    if (firstFile.fail() || secFile.fail()) {
-        cout << "please enter valid file name";
-    }
-    else {
-        firstFile << "\n" << secFile.rdbuf();
-        cout << "Please go check " << name1;
+    while (true)
+    {
+        cout << "Please enter the first file name to append to(e.g. file1.txt): ";
+        cin >> name1;
+        cout << "Please enter the second file name(e.g. file2.txt): ";
+        cin >> name2;
+        firstFile.open(name1, ios::app);
+        secFile.open(name2, ios::in);
+        if (firstFile.fail() || secFile.fail()) {
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            firstFile << "\n" << secFile.rdbuf();
+            cout << "Please go check " << name1 << "\n";
+            break;
+        }
     }
     firstFile.close();
     secFile.close();
 
 }
+//_________________________________________
+void searchWord() {
+    fstream file;
+    int check = 0;
+    char fileName[100];
+    string word, name;
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> fileName;
+        file.open(fileName, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            cout << "Please enter the word to search for: ";
+            cin >> word;
+            for (int i = 0; i < word.size(); i++) { // to ignore the case 
+                word[i] = toupper(word[i]);
+            }
+            while (!file.eof()) {
+                file >> name;
+                for (int i = 0; i < name.size(); i++) {
+                    name[i] = toupper(name[i]);
+                }
+                if (name == word) {
+                    check = 1;
+                    break;
+                }    
+            }
+            if (check == 1) {
+                cout << "Word was found in the file.";
+                break;
+            }
+            else {
+                cout << "Word was not found in the file.";
+            }
+        }
+    }
+    file.close();
+}
+//_________________________________________
