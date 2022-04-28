@@ -1,0 +1,12 @@
+#pragma once
+void menuDisplay();
+void addText();
+void dispalyContent();
+void emptyFile();
+void encryptFile();
+void decryptFile();
+void Merge();
+void countWords();
+void countChars();
+void countLines();
+void searchWord();
