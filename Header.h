@@ -10,3 +10,7 @@ void countWords();
 void countChars();
 void countLines();
 void searchWord();
+void countWordExists();
+void upperCase();
+void lowerCase();
+void contentCaps();

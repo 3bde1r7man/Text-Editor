@@ -39,6 +39,18 @@ int main()
     case 10:
         searchWord();
         break;
+    case 11:
+        countWordExists();
+        break;
+    case 12:
+        upperCase();
+        break;
+    case 13:
+        lowerCase();
+        break;
+    case 14:
+        contentCaps();
+        break;
     default:
         break;
     }

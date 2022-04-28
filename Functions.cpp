@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include "Header.h"
 
 using namespace std;
@@ -14,14 +15,14 @@ void addText() {
     {
         cout << "Please enter the file name (e.g. file1.txt): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name, ios::in);// Opening file as in to check if it exist
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
         }
         else {
-            file.close();
-            file.open(name, ios::app);
+            file.close(); // close the file to open it to append
+            file.open(name, ios::app); // open the file to append
             cout << "Please enter the Text to append: ";
             cin.ignore();
             getline(cin, Text);
@@ -46,7 +47,7 @@ void dispalyContent() {
             cin.ignore();
         }
         else {
-            cout << file.rdbuf();
+            cout << file.rdbuf(); // reading the buffer and print it
             break;
         }
     }
@@ -66,7 +67,7 @@ void emptyFile() {
             cin.ignore();
         }
         else {
-            file.clear();
+            file.clear(); // Clearing the file content
             cout << "Please go check " << name << "\n";
             break;
         }
@@ -83,7 +84,7 @@ void encryptFile() {
     {
         cout << "Please enter the file name (e.g. file1.txt): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name, ios::in);// Opening file to take the buffer
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -91,17 +92,17 @@ void encryptFile() {
         else {
             while (!file.eof())
             {
-                if (file.peek() == EOF) {
+                if (file.peek() == EOF) { // To avoid printing EOF char
                     break;
                 }
-                buffer += char(file.get());
+                buffer += char(file.get()); // Add each char to the buffer
             }
-            file.close();
-            for (int i = 0; i < buffer.size(); i++) {
+            file.close(); // Close the file
+            for (int i = 0; i < buffer.size(); i++) { // Encrypt the file content
                 buffer[i]++;
             }
-            file.open(name, ios::out);
-            file << buffer;
+            file.open(name, ios::out); // Open the file for writing
+            file << buffer; // Add the content encrypted to the file
             cout << "Please go check " << name << "\n";
             break;
         }
@@ -126,17 +127,17 @@ void decryptFile() {
         else {
             while (!file.eof())
             {
-                if (file.peek() == EOF) {
+                if (file.peek() == EOF) { // To avoid printing EOF char
                     break;
                 }
-                buffer += char(file.get());
+                buffer += char(file.get()); // Add each char to the buffer
             }
             file.close();
-            for (int i = 0; i < buffer.size(); i++) {
+            for (int i = 0; i < buffer.size(); i++) { // Decrypt the file content
                 buffer[i]--;
             }
-            file.open(name, ios::out);
-            file << buffer;
+            file.open(name, ios::out); // Open the file for writing
+            file << buffer; // Add the content decrypted to the file
             cout << "Please go check " << name << "\n";
             break;
         }
@@ -153,13 +154,15 @@ void Merge() {
         cin >> name1;
         cout << "Please enter the second file name(e.g. file2.txt): ";
         cin >> name2;
-        firstFile.open(name1, ios::app);
+        firstFile.open(name1, ios::in);
         secFile.open(name2, ios::in);
         if (firstFile.fail() || secFile.fail()) {
             cout << "Please enter valid file name.\n";
             cin.ignore();
         }
         else {
+            firstFile.close();
+            firstFile.open(name1, ios::app);
             firstFile << "\n" << secFile.rdbuf();
             cout << "Please go check " << name1 << "\n";
             break;
@@ -292,6 +295,170 @@ void searchWord() {
             else {
                 cout << "Word was not found in the file.";
             }
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void countWordExists() {
+    fstream file;
+    char name[100];
+    int count = 0;
+    string buffer = "", word, temp;
+    istringstream content("");
+
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            cout << "Please enter the word to search for: ";
+            cin >> word;
+            for (int i = 0; i < word.size(); i++) { // To ignore the case 
+                word[i] = toupper(word[i]);
+            }
+            while (!file.eof())
+            {
+                if (file.peek() == EOF) { // To avoid taking EOF char
+                    break;
+                }
+                buffer += char(file.get()); // Add each char to the buffer
+            }
+            content.str(buffer); 
+            content >> temp; // Put the first word to check it
+            while (content)
+            {
+                for (int i = 0; i < temp.size(); i++) { // To ignore the case
+                    temp[i] = toupper(temp[i]);
+                }
+                if (word == temp) {
+                    count++;
+                }
+                content >> temp; // To put the next word to check it
+            }
+            cout << "The word \"" << word << "\" was found " << count << " times in the file.";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void upperCase() {
+    fstream file;
+    char name[100];
+    string buffer = "";
+
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                if (file.peek() == EOF) { // To avoid taking EOF char
+                    break;
+                }
+                buffer += char(file.get()); // Add each char to the buffer
+            }
+            file.close();
+            for (int i = 0; i < buffer.size(); i++) { // Content to upper case
+                buffer[i] = toupper(buffer[i]);
+            }
+            file.open(name, ios::out); // Open the file for writing
+            file << buffer; // Add the content to the file
+            cout << "Please go check " << name << "\n";
+            break;
+        }
+    }
+    file.close();
+ }
+//_________________________________________
+void lowerCase() {
+    fstream file;
+    char name[100];
+    string buffer = "";
+
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                if (file.peek() == EOF) { // To avoid taking EOF char
+                    break;
+                }
+                buffer += char(file.get()); // Add each char to the buffer
+            }
+            file.close();
+            for (int i = 0; i < buffer.size(); i++) { // Content to lower case
+                buffer[i] = tolower(buffer[i]);
+            }
+            file.open(name, ios::out); // Open the file for writing
+            file << buffer; // Add the content to the file
+            cout << "Please go check " << name << "\n";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void contentCaps() {
+    fstream file;
+    char name[100];
+    int count = 0;
+    string buffer = "", word = "", temp;
+    istringstream content("");
+
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                if (file.peek() == EOF) { // To avoid taking EOF char
+                    break;
+                }
+                buffer += char(file.get()); // Add each char to the buffer
+            }
+            file.close();
+            content.str(buffer);
+            buffer = "";
+            content >> temp; // Put the first word to change it
+            while (content)
+            {
+                temp[0] = toupper(temp[0]);
+                buffer += temp + " ";
+                content >> temp; // To put the next word to change it
+            }
+            file.open(name, ios::out);
+            for (int i = 0; i < buffer.size() - 1; i++) {
+                word += buffer[i];
+            }
+            file << word;
+            cout << "Please go check " << name << "\n";
+            break;
         }
     }
     file.close();
