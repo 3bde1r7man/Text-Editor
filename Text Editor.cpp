@@ -1,21 +1,22 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 int userInput;
 
-<<<<<<< Updated upstream
 // define each function are used
 void menuDisplay();
+void addText();
+void dispalyContent();
+void emptyFile();
+void encryptFile();
+void decryptFile();
 void Merge();
 void countWords();
 void countChars();
 void countLines();
 void searchWord();
-=======
-void Merge();
-void menuDisplay();
->>>>>>> Stashed changes
 
 int main()
 {
@@ -23,10 +24,24 @@ int main()
     menuDisplay();
     switch (userInput)
     {
+    case 1:
+        addText();
+        break;
+    case 2:
+        dispalyContent();
+        break;
+    case 3:
+        emptyFile();
+        break;
+    case 4:
+        encryptFile();
+        break;
+    case 5:
+        decryptFile();
+        break;
     case 6:
         Merge();
         break;
-<<<<<<< Updated upstream
     case 7:
         countWords();
         break;
@@ -39,20 +54,14 @@ int main()
     case 10:
         searchWord();
         break;
-=======
->>>>>>> Stashed changes
     default:
         break;
     }
-    
+
 }
 //_________________________________________
 void menuDisplay() {
-<<<<<<< Updated upstream
     while (true) { // Dispaly menu and take user input
-=======
-    while (true) {
->>>>>>> Stashed changes
         cout << "1- Add new text to the end of the file\n";
         cout << "2- Display the content of the file\n";
         cout << "3- Empty the file\n";
@@ -70,14 +79,9 @@ void menuDisplay() {
         cout << "15- Save\n";
         cout << "16- Exit\n--> ";
         cin >> userInput;
-<<<<<<< Updated upstream
         if (userInput >= 1 && userInput <= 16) {
             break;
         }
-=======
-        if (userInput >= 1 && userInput <= 16)
-            break;
->>>>>>> Stashed changes
         else {
             cout << "Please enter valid input from the menu!!\n\n";
             cin.ignore();
@@ -85,10 +89,150 @@ void menuDisplay() {
     }
 }
 //_________________________________________
+void addText() {
+    fstream file;
+    char name[100];
+    string Text;
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            file.close();
+            file.open(name, ios::app);
+            cout << "Please enter the Text to append: ";
+            cin.ignore();
+            getline(cin, Text);
+            file << " " << Text;
+            cout << "Please go check " << name << "\n";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void dispalyContent() {
+    fstream file;
+    char name[100];
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            cout << file.rdbuf();
+            cout << "Please go check " << name << "\n";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void emptyFile() {
+    fstream file;
+    char name[100];
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::out);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            file.clear();
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void encryptFile() {
+    fstream file;
+    char name[100];
+    string buffer = "";
+
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                if (file.peek() == EOF) {
+                    break;
+                }
+                buffer += char(file.get());
+            }
+            file.close();
+            for (int i = 0; i < buffer.size(); i++) {
+                buffer[i]++;
+            }
+            file.open(name, ios::out);
+            file << buffer;
+            cout << "Please go check " << name << "\n";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
+void dispalyContent() {
+
+}
+void decryptFile() {
+    fstream file;
+    char name[100];
+    string buffer = "";
+
+    while (true)
+    {
+        cout << "Please enter the file name (e.g. file1.txt): ";
+        cin >> name;
+        file.open(name, ios::in);// Opening file
+        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
+            cout << "Please enter valid file name.\n";
+            cin.ignore();
+        }
+        else {
+            while (!file.eof())
+            {
+                if (file.peek() == EOF) {
+                    break;
+                }
+                buffer += char(file.get());
+            }
+            file.close();
+            for (int i = 0; i < buffer.size(); i++) {
+                buffer[i]--;
+            }
+            file.open(name, ios::out);
+            file << buffer;
+            cout << "Please go check " << name << "\n";
+            break;
+        }
+    }
+    file.close();
+}
+//_________________________________________
 void Merge() {
     fstream firstFile, secFile;
     char name1[100], name2[100];
-<<<<<<< Updated upstream
     while (true)
     {
         cout << "Please enter the first file name to append to(e.g. file1.txt): ";
@@ -106,25 +250,10 @@ void Merge() {
             cout << "Please go check " << name1 << "\n";
             break;
         }
-=======
-    cout << "Please enter the first file name to append to(e.g. file1.txt): ";
-    cin >> name1;
-    cout << "Please enter the second file name(e.g. file2.txt): ";
-    cin >> name2;
-    firstFile.open(name1, ios::app);
-    secFile.open(name2, ios::in);
-    if (firstFile.fail() || secFile.fail()) {
-        cout << "please enter valid file name";
-    }
-    else {
-        firstFile << "\n" << secFile.rdbuf();
-        cout << "Please go check " << name1;
->>>>>>> Stashed changes
     }
     firstFile.close();
     secFile.close();
 
-<<<<<<< Updated upstream
 }
 //_________________________________________
 void countWords() {
@@ -170,8 +299,8 @@ void countChars() {
         }
         else {
             while (!file.eof())
-            {   
-                /*if (isalnum(file.get())) { // will count if alpha or digit not else 
+            {
+                /*if (isalnum(file.get())) { // will count if alpha or digit not else
                     count++;
                 }*/
                 if (isascii(file.get())) { // If the char is in ascii will count even spaces
@@ -240,7 +369,7 @@ void searchWord() {
                 if (name == word) {
                     check = 1;
                     break;
-                }    
+                }
             }
             if (check == 1) {
                 cout << "Word was found in the file.";
@@ -254,6 +383,3 @@ void searchWord() {
     file.close();
 }
 //_________________________________________
-=======
-}
->>>>>>> Stashed changes
