@@ -57,9 +57,9 @@ int main()
     default:
         break;
     }
-    
+
 }
-//_______________
+//_________________________________________
 void menuDisplay() {
     while (true) { // Dispaly menu and take user input
         cout << "1- Add new text to the end of the file\n";
@@ -88,7 +88,7 @@ void menuDisplay() {
         }
     }
 }
-//_______________
+//_________________________________________
 void addText() {
     fstream file;
     char name[100];
@@ -108,14 +108,14 @@ void addText() {
             cout << "Please enter the Text to append: ";
             cin.ignore();
             getline(cin, Text);
-            file<< " " << Text;
+            file << " " << Text;
             cout << "Please go check " << name << "\n";
             break;
         }
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void dispalyContent() {
     fstream file;
     char name[100];
@@ -136,7 +136,7 @@ void dispalyContent() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void emptyFile() {
     fstream file;
     char name[100];
@@ -156,7 +156,7 @@ void emptyFile() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void encryptFile() {
     fstream file;
     char name[100];
@@ -191,7 +191,10 @@ void encryptFile() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
+void dispalyContent() {
+
+}
 void decryptFile() {
     fstream file;
     char name[100];
@@ -226,7 +229,7 @@ void decryptFile() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void Merge() {
     fstream firstFile, secFile;
     char name1[100], name2[100];
@@ -252,7 +255,7 @@ void Merge() {
     secFile.close();
 
 }
-//_______________
+//_________________________________________
 void countWords() {
     fstream file;
     char name[100];
@@ -280,7 +283,7 @@ void countWords() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void countChars() {
     fstream file;
     char name[100];
@@ -296,8 +299,8 @@ void countChars() {
         }
         else {
             while (!file.eof())
-            {   
-                /*if (isalnum(file.get())) { // will count if alpha or digit not else 
+            {
+                /*if (isalnum(file.get())) { // will count if alpha or digit not else
                     count++;
                 }*/
                 if (isascii(file.get())) { // If the char is in ascii will count even spaces
@@ -310,7 +313,7 @@ void countChars() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void countLines() {
     fstream file;
     char name[256];
@@ -337,7 +340,7 @@ void countLines() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
 void searchWord() {
     fstream file;
     int check = 0;
@@ -366,7 +369,7 @@ void searchWord() {
                 if (name == word) {
                     check = 1;
                     break;
-                }    
+                }
             }
             if (check == 1) {
                 cout << "Word was found in the file.";
@@ -379,4 +382,4 @@ void searchWord() {
     }
     file.close();
 }
-//_______________
+//_________________________________________
