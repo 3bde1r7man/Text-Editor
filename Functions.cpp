@@ -2,46 +2,58 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include<conio.h>
 #include "Header.h"
-
 using namespace std;
 
-//_________________________________________
+
 void addText() {
+    int i;
+    char ch;
+    string name, text = "";
     fstream file;
-    char name[100];
-    string Text;
-    while (true)
-    {
-        cout << "Please enter the file name (e.g. file1.txt): ";
-        cin >> name;
-        file.open(name, ios::in);// Opening file as in to check if it exist
-        if (file.fail()) { // If the file is not exist ask the user again to enter the file name
-            cout << "Please enter valid file name.\n";
-            cin.ignore();
+    cout << "Please enter the file name (e.g. file1) : ";
+    cin >> name;
+    file.open( name + ".txt", ios::out | ios::app);
+    system("cls");
+    cout << "Please enter the text that you want to add : ";
+    cin.ignore();
+    for (i = 0; (ch = _getche()) != '\032';) {
+
+        if (ch != '\b') {
+            if (ch == '\r') {
+                cout << "\n";
+            }
+            text += ch;
+            i++;
         }
         else {
-            file.close(); // close the file to open it to append
-            file.open(name, ios::app); // open the file to append
-            cout << "Please enter the Text to append: ";
-            cin.ignore();
-            getline(cin, Text);
-            file << " " << Text;
-            cout << "Please go check " << name << "\n";
-            break;
+            i--;
+            if (i < 0) {
+                i++;
+            }
+            else {
+                cout << "\b";
+            }
+        }
+        if (ch == 26) {
+            return;
         }
     }
+    text[i] = '\0';
+    file << text;
+    cout << "\n\nPlease go check " << name << "\n";
     file.close();
 }
 //_________________________________________
 void dispalyContent() {
     fstream file;
-    char name[100];
+    string name;
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -56,12 +68,12 @@ void dispalyContent() {
 //_________________________________________
 void emptyFile() {
     fstream file;
-    char name[100];
+    string name;
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::out);// Opening file
+        file.open(name + ".txt", ios::out);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -77,14 +89,13 @@ void emptyFile() {
 //_________________________________________
 void encryptFile() {
     fstream file;
-    char name[100];
-    string buffer = "";
+    string buffer = "", name;
 
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file to take the buffer
+        file.open(name + ".txt", ios::in);// Opening file to take the buffer
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -112,14 +123,13 @@ void encryptFile() {
 //_________________________________________
 void decryptFile() {
     fstream file;
-    char name[100];
-    string buffer = "";
+    string buffer = "", name;
 
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt" , ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -147,15 +157,15 @@ void decryptFile() {
 //_________________________________________
 void Merge() {
     fstream firstFile, secFile;
-    char name1[100], name2[100];
+    string name1, name2;
     while (true)
     {
-        cout << "Please enter the first file name to append to(e.g. file1.txt): ";
+        cout << "Please enter the first file name to append to(e.g. file1): ";
         cin >> name1;
-        cout << "Please enter the second file name(e.g. file2.txt): ";
+        cout << "Please enter the second file name(e.g. file2): ";
         cin >> name2;
-        firstFile.open(name1, ios::in);
-        secFile.open(name2, ios::in);
+        firstFile.open(name1 + ".txt", ios::in);
+        secFile.open(name2 + ".txt", ios::in);
         if (firstFile.fail() || secFile.fail()) {
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -175,13 +185,14 @@ void Merge() {
 //_________________________________________
 void countWords() {
     fstream file;
+    string fileName;
     char name[100];
     int count = 0;
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
-        cin >> name;
-        file.open(name, ios::in);// Opening file
+        cout << "Please enter the file name (e.g. file1): ";
+        cin >> fileName;
+        file.open(fileName + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -203,13 +214,13 @@ void countWords() {
 //_________________________________________
 void countChars() {
     fstream file;
-    char name[100];
+    string name;
     int count = 0;
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -233,13 +244,14 @@ void countChars() {
 //_________________________________________
 void countLines() {
     fstream file;
+    string fileName;
     char name[256];
     int count = 0;
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
-        cin >> name;
-        file.open(name, ios::in);// Opening file
+        cout << "Please enter the file name (e.g. file1): ";
+        cin >> fileName;
+        file.open(fileName + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -261,13 +273,12 @@ void countLines() {
 void searchWord() {
     fstream file;
     int check = 0;
-    char fileName[100];
-    string word, name;
+    string word, name, fileName;
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> fileName;
-        file.open(fileName, ios::in);// Opening file
+        file.open(fileName + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -302,16 +313,15 @@ void searchWord() {
 //_________________________________________
 void countWordExists() {
     fstream file;
-    char name[100];
     int count = 0;
-    string buffer = "", word, temp;
+    string buffer = "", word, temp, name;
     istringstream content("");
 
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -350,14 +360,13 @@ void countWordExists() {
 //_________________________________________
 void upperCase() {
     fstream file;
-    char name[100];
-    string buffer = "";
+    string buffer = "", name;
 
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -385,14 +394,13 @@ void upperCase() {
 //_________________________________________
 void lowerCase() {
     fstream file;
-    char name[100];
-    string buffer = "";
+    string buffer = "", name;
 
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
@@ -420,16 +428,15 @@ void lowerCase() {
 //_________________________________________
 void contentCaps() {
     fstream file;
-    char name[100];
     int count = 0;
-    string buffer = "", word = "", temp;
+    string buffer = "", word = "", temp, name;
     istringstream content("");
 
     while (true)
     {
-        cout << "Please enter the file name (e.g. file1.txt): ";
+        cout << "Please enter the file name (e.g. file1): ";
         cin >> name;
-        file.open(name, ios::in);// Opening file
+        file.open(name + ".txt", ios::in);// Opening file
         if (file.fail()) { // If the file is not exist ask the user again to enter the file name
             cout << "Please enter valid file name.\n";
             cin.ignore();
