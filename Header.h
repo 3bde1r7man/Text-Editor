@@ -14,3 +14,4 @@ void countWordExists();
 void upperCase();
 void lowerCase();
 void contentCaps();
+void save();
