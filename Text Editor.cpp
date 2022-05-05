@@ -5,56 +5,65 @@ int userInput;
 
 int main()
 {
-    cout << "Ahlan ya user ya habibi\n";
-    menuDisplay();
-    switch (userInput)
+    while (true)
     {
-    case 1:
-        addText();
-        break;
-    case 2:
-        dispalyContent();
-        break;
-    case 3:
-        emptyFile();
-        break;
-    case 4:
-        encryptFile();
-        break;
-    case 5:
-        decryptFile();
-        break;
-    case 6:
-        Merge();
-        break;
-    case 7:
-        countWords();
-        break;
-    case 8:
-        countChars();
-        break;
-    case 9:
-        countLines();
-        break;
-    case 10:
-        searchWord();
-        break;
-    case 11:
-        countWordExists();
-        break;
-    case 12:
-        upperCase();
-        break;
-    case 13:
-        lowerCase();
-        break;
-    case 14:
-        contentCaps();
-        break;
-    default:
-        break;
-    }
-
+        cout << "Ahlan ya user ya habibi\n";
+        menuDisplay();
+        switch (userInput)
+        {
+        case 1:
+            addText();
+            break;
+        case 2:
+            dispalyContent();
+            break;
+        case 3:
+            emptyFile();
+            break;
+        case 4:
+            encryptFile();
+            break;
+        case 5:
+            decryptFile();
+            break;
+        case 6:
+            Merge();
+            break;
+        case 7:
+            countWords();
+            break;
+        case 8:
+            countChars();
+            break;
+        case 9:
+            countLines();
+            break;
+        case 10:
+            searchWord();
+            break;
+        case 11:
+            countWordExists();
+            break;
+        case 12:
+            upperCase();
+            break;
+        case 13:
+            lowerCase();
+            break;
+        case 14:
+            contentCaps();
+            break;
+        case 15:
+            save();
+            exit(0);
+            break;
+        case 16:
+            exit(0);
+            break;
+        default:
+            break;
+        }
+    }    
 }
 //_________________________________________
 void menuDisplay() {

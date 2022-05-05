@@ -14,18 +14,19 @@ void addText() {
     fstream file;
     cout << "Please enter the file name (e.g. file1) : ";
     cin >> name;
-    file.open( name + ".txt", ios::out | ios::app);
-    system("cls");
+    file.open( name + ".txt", ios::app);
     cout << "Please enter the text that you want to add : ";
-    cin.ignore();
     for (i = 0; (ch = _getche()) != '\032';) {
-
         if (ch != '\b') {
             if (ch == '\r') {
                 cout << "\n";
+                text += "\n";
+                i++;
             }
-            text += ch;
-            i++;
+            else {
+                text += ch;
+                i++;
+            }
         }
         else {
             i--;
@@ -59,7 +60,7 @@ void dispalyContent() {
             cin.ignore();
         }
         else {
-            cout << file.rdbuf(); // reading the buffer and print it
+            cout << file.rdbuf() << "\n"; // reading the buffer and print it
             break;
         }
     }
@@ -471,3 +472,45 @@ void contentCaps() {
     file.close();
 }
 //_________________________________________
+void save() {
+    fstream file1, file2;
+    char name1[80], name2[80];
+    int choice;
+    while (true)
+    {
+        cout << "1- Save in new File\n2- Save in the same file\n--> ";
+        cin >> choice;
+        if (choice == 1 || choice == 2) {
+            break;
+        }
+        else {
+            cin.ignore();
+            cout << "Please enter a valid choice. \n";
+        }
+    }
+    if (choice == 1) {
+        while (true)
+        {
+            cout << "Please enter the file name you want to save (e.g. filename.txt) : ";
+            cin >> name1;
+            file1.open(name1, ios::in);
+            if (file1.fail()) {
+                cout << "Invalid file name\n";
+                cin.ignore();
+            }
+            else {
+                cout << "Please enter the file name to save to (e.g. filename.txt) : ";
+                cin >> name2;
+                file2.open(name2, ios::app);
+                file2 << file1.rdbuf(); 
+                break;
+            }
+        }
+        file1.close();
+        remove(name1);
+        file2.close();
+    }
+    else { 
+        exit(0); 
+    }
+}
