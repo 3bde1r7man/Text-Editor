@@ -5,9 +5,10 @@ int userInput;
 
 int main()
 {
+    cout << "Ahlan ya user ya habibi\n";
+    checkFile();
     while (true)
     {
-        cout << "Ahlan ya user ya habibi\n";
         menuDisplay();
         switch (userInput)
         {
@@ -68,6 +69,7 @@ int main()
 //_________________________________________
 void menuDisplay() {
     while (true) { // Dispaly menu and take user input
+        
         cout << "1- Add new text to the end of the file\n";
         cout << "2- Display the content of the file\n";
         cout << "3- Empty the file\n";

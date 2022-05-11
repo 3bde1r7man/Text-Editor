@@ -1,5 +1,6 @@
 #pragma once
 void menuDisplay();
+void checkFile();
 void addText();
 void dispalyContent();
 void emptyFile();
