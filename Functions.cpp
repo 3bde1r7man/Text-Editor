@@ -20,6 +20,7 @@ void checkFile() {
     else {
         cout << "File is opened successful.\n";
     } 
+    myFile.close();
 }
 //_________________________________________
 void addText() {
@@ -60,7 +61,7 @@ void addText() {
 }
 //_________________________________________
 void dispalyContent() {
-    myFile.open(fileName, ios::out);
+    myFile.open(fileName, ios::in);
     cout << myFile.rdbuf() << "\n"; // reading the buffer and print it
     myFile.close();
 }
@@ -147,7 +148,7 @@ void countWords() {
             count++;
         }
     }
-    cout << "There is " << count << " words in this file.";    
+    cout << "There is " << count << " words in this file.\n";    
     myFile.close();
 }
 //_________________________________________
@@ -163,7 +164,7 @@ void countChars() {
             count++;
         }
     }
-    cout << "There is " << count << " characters in this file."; 
+    cout << "There is " << count << " characters in this file.\n"; 
     myFile.close();
 }
 //_________________________________________
@@ -177,7 +178,7 @@ void countLines() {
             count++;
         }
     }
-    cout << "There is " << count << " lines in this file.";       
+    cout << "There is " << count << " lines in this file.\n";       
     myFile.close();
 }
 //_________________________________________
@@ -283,33 +284,28 @@ void lowerCase() {
     myFile.close();
 }
 //_________________________________________
-void contentCaps() {
-    int count = 0;
-    string buffer = "", word = "", temp;
-    istringstream content("");
-    myFile.open(fileName, ios::in);// Opening file       
-    while (!myFile.eof())
-    {
-        if (myFile.peek() == EOF) { // To avoid taking EOF char
-            break;
+void contentCaps() {    
+    char firstChar;
+    string text = "";
+    int counter = 0, counter2 = 0;    
+    myFile.open(fileName , ios::in);
+    while (!myFile.eof()) {
+        myFile.get(firstChar);
+        if (counter == 0 || counter2 == counter) {
+            text += char(toupper(firstChar));
+            counter++;
+            continue;
         }
-        buffer += char(myFile.get()); // Add each char to the buffer
+        if (firstChar == ' ' || firstChar == '\n') {
+            text += char(firstChar);
+            counter2 = counter;
+            continue;
+        }
+        text +=  char(firstChar);
     }
     myFile.close();
-    content.str(buffer);
-    buffer = "";
-    content >> temp; // Put the first word to change it
-    while (content)
-    {
-        temp[0] = toupper(temp[0]);
-        buffer += temp + " ";
-        content >> temp; // To put the next word to change it
-    }
     myFile.open(fileName, ios::out);
-    for (int i = 0; i < buffer.size() - 1; i++) {
-        word += buffer[i];
-    }
-    myFile << word;
+    myFile << text;
     cout << "Done.\n";
     myFile.close();
 }
