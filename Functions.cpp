@@ -28,7 +28,7 @@ void addText() {
     char ch;
     string text = "";
     myFile.open(fileName, ios::app);
-    cout << "Please enter the text that you want to add : ";
+    cout << "Please enter the text that you want to add finish by (ctrl+Z): ";
     for (i = 0; (ch = _getche()) != '\032';) {
         if (ch != '\b') {
             if (ch == '\r') {
